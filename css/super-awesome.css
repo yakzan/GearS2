@@ -1,0 +1,48 @@
+.cc-selector input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+}
+.valence-1{background-image:url(../images/valence-1.png);}
+.valence-2{background-image:url(../images/valence-2.png);}
+.valence-3{background-image:url(../images/valence-3.png);}
+.valence-4{background-image:url(../images/valence-4.png);}
+.valence-5{background-image:url(../images/valence-5.png);}
+.arousal-1{background-image:url(../images/arousal-1.png);}
+.arousal-2{background-image:url(../images/arousal-2.png);}
+.arousal-3{background-image:url(../images/arousal-3.png);}
+.arousal-4{background-image:url(../images/arousal-4.png);}
+.arousal-5{background-image:url(../images/arousal-5.png);}
+
+.cc-selector input:active +.drinkcard-cc{opacity: .9;}
+.cc-selector input:checked +.drinkcard-cc{
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+}
+.drinkcard-cc{
+    cursor:pointer;
+    background-size: contain;
+    background-repeat:no-repeat;
+    display:block;
+    width: 100px; height: 80px;
+	margin-left: auto;
+    margin-right: auto;    
+    -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-filter: brightness(1.8) grayscale(.2) opacity(.7);
+       -moz-filter: brightness(1.8) grayscale(.2) opacity(.7);
+            filter: brightness(1.8) grayscale(.2) opacity(.7);
+}
+.drinkcard-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.1) opacity(.9);
+       -moz-filter: brightness(1.2) grayscale(.1) opacity(.9);
+            filter: brightness(1.2) grayscale(.1) opacity(.9);
+}
+
+/* Extras */
+a:visited{color:#888}
+a{color:#444;text-decoration:none;}
+p{margin-bottom:.3em;}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Valence and Arousal Evaluation</title>
+<link rel="stylesheet" href="css/super-awesome.css">
+<script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/tau.js"></script>
+<script type="text/javascript" src="js/jquerymobile-swipeupdown.js"></script>
+<script type="text/javascript" src="js/hammer.js"></script>
+<script type="text/javascript">
+var documentsDir, file_VAR, stream_VAR, d;
+	//$(document).ready (function(){
+	window.onload = function() {
+		var element = document.getElementById('mains');
+		var hammertimeL = Hammer(document.body).on("swiperight",
+				function(event) {
+					saveResults();
+					return window.location.href = "options.html";
+				}, function(e) {
+					box = document.querySelector('#textbox12');
+					box.innerHTML = box.innerHTML + " swipeError " + e.message;
+				});
+
+		var hammertimeR = Hammer(document.body).on("swipeleft",
+				function(event) {
+					saveResults();
+					return window.location.href = "index.html";
+				}, function(e) {
+					box = document.querySelector('#textbox12');
+					box.innerHTML = box.innerHTML + " swipeError " + e.message;
+				});
+
+		var goToIndex = setInterval(function() {
+			return window.location.href = "index.html";
+		}, 40*1000);
+		
+		tizen.filesystem.resolve(
+				'documents',
+				function(dir) {
+					documentsDir = dir;
+					dir.listFiles(onsuccess,onFileError);
+				}, function(e) {
+					console.log("Error" + e.message);
+				}, "rw"
+		);	
+	}
+	
+	function writeValenceArousal (){		
+		if ($('input[name=valence]:checked', '#form-valence').val() != null || $('input[name=valence]:checked', '#form-valence').val() != undefined){			
+			stream_VAR.write(d.getTime()+"\t"+$('input[name=valence]:checked', '#form-valence').val()+"\t");
+		}
+		else {
+			stream_VAR.write(d.getTime()+"\t"+'valence-null'+"\t");
+			}
+		if ($('input[name=arousal]:checked', '#form-arousal').val() != null || $('input[name=arousal]:checked', '#form-arousal').val() != undefined){			
+			stream_VAR.write($('input[name=arousal]:checked', '#form-arousal').val());
+		}
+		else {
+			stream_VAR.write('arousal-null');
+			}
+		stream_VAR.write("\n");
+
+	}
+
+	function createVARFile(){
+		d = new Date();
+		file_VAR = documentsDir.createFile("VAR_"+d.getTime()+".txt");
+		if (file_VAR != null) {  file_VAR.openStream("w", function(fs) { stream_VAR=fs; }, function(e) {console.log("Error " + e.message); }, "UTF-8");}		
+	}
+
+	function saveResults(){
+		createVARFile();
+		writeValenceArousal();		
+	}
+</script>
+<style>
+* {
+	box-sizing: border-box;
+	background: -webkit-linear-gradient(90deg, #616161 10%, #9bc5c3 90%);
+}
+
+.header {
+	border: 1px solid blue;
+	padding: 15px;
+}
+
+.menu {
+	height: 100%;
+	width: 50%;
+	float: left;
+	padding: 1px;
+	border: 1px solid #006699;
+}
+
+.main {
+	height: 100%;
+	width: 50%;
+	float: left;
+	padding: 1px;
+	border: 1px solid #006699;
+}
+
+label>input { /* HIDE RADIO */
+	visibility: hidden; /* Makes input not-clickable */
+	position: absolute; /* Remove input from document flow */
+}
+
+label>input+img { /* IMAGE STYLES */
+	cursor: pointer;
+	border: 2px solid transparent;
+}
+
+label>input:checked+img { /* (RADIO CHECKED) IMAGE STYLES */
+	border: 2px solid #f00;
+}
+</style>
+</head>
+<body style="overflow: hidden; margin: 0">
+	<div class="ui-page ui-page-active" id="mains">
+		<div class="menu">
+			<form id="form-arousal" action="">
+				<div class="cc-selector">
+					<input type="radio" id="arousal-1" name="arousal" value="arousal-1" /><label
+						class="drinkcard-cc arousal-1" for="arousal-1"></label> <input
+						type="radio" id="arousal-2" name="arousal" value="arousal-2" /><label
+						class="drinkcard-cc arousal-2" for="arousal-2"></label> <input
+						type="radio" id="arousal-3" name="arousal" value="arousal-3" /><label
+						class="drinkcard-cc arousal-3" for="arousal-3"></label> <input
+						type="radio" id="arousal-4" name="arousal" value="arousal-4" /><label
+						class="drinkcard-cc arousal-4" for="arousal-4"></label> <input
+						type="radio" id="arousal-5" name="arousal" value="arousal-5" /><label
+						class="drinkcard-cc arousal-5" for="arousal-5"></label>
+				</div>
+			</form>
+		</div>
+
+		<div class="main">
+			<form id="form-valence" action="">
+				<div class="cc-selector">
+					<input type="radio" id="valence-1" name="valence" value="valence-1" />
+					<label class="drinkcard-cc valence-1" for="valence-1"></label> <input
+						type="radio" id="valence-2" name="valence" value="valence-2" /> <label
+						class="drinkcard-cc valence-2" for="valence-2"></label> <input
+						type="radio" id="valence-3" name="valence" value="valence-3" /> <label
+						class="drinkcard-cc valence-3" for="valence-3"></label> <input
+						type="radio" id="valence-4" name="valence" value="valence-4" /> <label
+						class="drinkcard-cc valence-4" for="valence-4"></label> <input
+						type="radio" id="valence-5" name="valence" value="valence-5" /> <label
+						class="drinkcard-cc valence-5" for="valence-5"></label>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

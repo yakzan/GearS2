@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no"/>
+<title>Sensor Readings</title>
+    <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="js/tau.js"></script>   
+	<script type="text/javascript" src="js/main.js"></script> 
+	<script type="text/javascript" src="js/hammer.js"></script>
+	 <!-- <link rel="stylesheet" href="css/tau.css" />-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet"  href="css/tau.min.css">
+</head>
+<body>
+	<div id="tabsectionchangerPage" class="ui-page ui-page-active">
+	<link rel="stylesheet"  href="css/sectionchanger.css">
+		<header class="ui-header ui-has-more">
+			<h2 class="ui-title">Sensor Readings</h2>
+			<button type="button" class="ui-more ui-icon-overflow">Sensor Readings</button>
+		</header>
+			<!-- Square Profile -->
+		<div id="moreoptionsPopup" class="ui-popup" data-transition="slideup">
+			<div class="ui-popup-header">Options</div>
+			<div class="ui-popup-content">
+				<ul class="ui-listview">
+					<li><a href="user.html">User Log</a></li>
+					<li><a href="#">Set an alarm</a></li>
+					<li><a href="#">Etc</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="tabsectionchanger" class="ui-content">
+			<!-- section changer has only one child. -->
+			<div>
+				<section style="text-align:center">
+								<header class="ui-header">
+				<h2 class="ui-title">User Info</h2>
+			</header>
+			<div class="ui-section-active" id="main">
+				<input type="text" id="useridBox" placeholder="Enter your name" />
+				<input class="btn-execute" id="button_OK" type="button" value="OK" />
+				<a class="btn-execute" href="index.html">Cancel</a>
+				<div style="margin: auto; width:100%;">
+				<span class="content_text" id="textbox12">Errors: </span>
+				</div>
+				<input class="btn-execute" id="button_sync" type="button" value="sync" />
+				<input class="btn-execute" id="button_screen" type="button" value="TAM GÜÇ" />
+				<input class="btn-execute" id="button_close" type="button" value="KAPAT" />	
+				<div style="margin: auto; width:100%;">
+				<span class="content_text" id="cpuState">Tam Güç: </span>
+				</div>
+			</div>	
+				</section>
+				<section class="ui-section" style="text-align:center">	
+					<ul class="ui-listview">
+						<li class="li-has-multiline">
+							<a>
+								Light Sensor
+								<span class="ui-li-sub-text li-text-sub" id="textbox0">Initializing LGT</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								Accelerometer
+								<span class="ui-li-sub-text li-text-sub" id="textbox7">Initializing ACC</span>
+							</a>
+						</li>
+										<li class="li-has-multiline">
+							<a>
+								Magnetometer
+								<span class="ui-li-sub-text li-text-sub" id="textbox3">Initializing MAG</span>
+							</a>
+						</li>
+						 <li class="li-has-multiline">
+							<a>
+								Heart Rate
+								<span class="ui-li-sub-text li-text-sub" id="textbox4">Initializing HR</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								Ultraviolet
+								<span class="ui-li-sub-text li-text-sub" id="textbox2">Initializing UV</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								Pedometer
+								<span class="ui-li-sub-text li-text-sub" id="textbox6">Initializing PED</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								GPS
+								<span class="ui-li-sub-text li-text-sub" id="textbox10">Initializing GPS</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								User ID
+								<span class="ui-li-sub-text li-text-sub" id="textbox11">User</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								Status
+								<span class="ui-li-sub-text li-text-sub" id="textbox9">User</span>
+							</a>
+						</li>
+						<li class="li-has-multiline">
+							<a>
+								Alarm Time
+								<span class="ui-li-sub-text li-text-sub" id="alarmInfo">Alarm</span>
+							</a>
+						</li>	
+						<li class="li-has-multiline">
+							<a>
+								Repeat Alarm Time
+								<span class="ui-li-sub-text li-text-sub" id="alarmInfo2">Alarm</span>
+							</a>
+						</li>					
+					</ul>	
+				</section>
+				<section class="ui-section-active" style="text-align:center">	
+ 					<ul class="ui-listview">
+						<li class="li-has-multiline" id="box-walking">
+							<a>	WALKING	<span class="ui-li-sub-text li-text-sub">Running, standing, stairs</span></a>
+						</li>
+						<li class="li-has-multiline" id="box-smoking">
+							<a>	SMOKING	<span class="ui-li-sub-text li-text-sub">Cigarettes, pipes, nargile</span></a>
+						</li>						
+						<li class="li-has-multiline" id="box-meeting">
+							<a>	MEETING	<span class="ui-li-sub-text li-text-sub">Presentation, talk, lecture</span></a>
+						</li>						
+						<li class="li-has-multiline" id="box-office">
+							<a>	WORKING	<span class="ui-li-sub-text li-text-sub" >At office, Typing, writing, mouse</span></a>
+						</li>										
+						<li class="li-has-multiline" id="box-recreate">
+							<a>	DINING <span class="ui-li-sub-text li-text-sub" >Eating, drinking, smoking</span></a>
+						</li>
+						<li class="li-has-multiline" id="box-sitting">
+							<a>	RELAX	<span class="ui-li-sub-text li-text-sub" >Idle, sleeping, meditation</span></a>
+						</li>		
+						<li class="li-has-multiline" id="box-commute">
+							<a>	COMMUTE <span class="ui-li-sub-text li-text-sub" >Bus, car, train</span></a>
+						</li>
+						<li class="li-has-multiline" id="box-shopping">
+							<a>	SHOPPING <span class="ui-li-sub-text li-text-sub" >Market, Store</span></a>
+						</li>
+						<li class="li-has-multiline" id="box-other">
+							<a>	OTHER <span class="ui-li-sub-text li-text-sub" >Not listed above</span></a>
+						</li>						
+						</ul>				
+			</section>
+			</div>
+		</div>
+		<script src="js/tab.js"></script>
+		<script src="js/moreoptions.js"></script>
+	</div> 
+	<script type="text/javascript" src="js/tau.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Name entry</title>
+    <script type="text/javascript" src="libs/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="js/tau.js"></script>    	
+	<script type="text/javascript" src="js/jquerymobile-swipeupdown.js"></script>
+	<script type="text/javascript" src="js/hammer.js"></script>
+<script type="text/javascript">
+var file_UID_options, stream_UID_options;
+//$(document).ready (function(){
+	window.onload = function () {
+//dragright dragleft
+		var element = document.getElementById('mains');
+		var hammertimeL = Hammer(document.body).on("swiperight", function(event) {
+			return window.location.href = "index.html";
+		}, function(e){box = document.querySelector('#textbox12');  box.innerHTML = box.innerHTML + " swipeError "+e.message;});
+
+		var hammertimeR = Hammer(document.body).on("swipeleft", function(event) {
+			return window.location.href = "valence.html";
+		}, function(e){box = document.querySelector('#textbox12');  box.innerHTML = box.innerHTML + " swipeError "+e.message;});
+		try{
+			
+			tizen.filesystem.resolve('documents/userid.txt',	
+			function(dir) {	
+					file_UID_options = dir;	
+					console.log("resolved documents %o", file_UID_options);
+					}, 	function(e) {		 createUserID(); box = document.querySelector('#textbox12');  box.innerHTML = box.innerHTML + " error "+e.message;	 
+						console.log("ERR" + e.message);},"rw");
+		}
+		catch(e){
+			box = document.querySelector('#textbox12');  box.innerHTML = box.innerHTML+ " exc " + e.message;
+			}
+		
+		var goToIndex = setInterval(function() {
+			return window.location.href = "index.html";
+		}, 40*1000);
+		
+if (file_UID_options != null) {  file_UID_options.openStream("w", function(fs) { stream_UID_options=fs; 		       }, function(e) {				         console.log("Error " + e.message);				       }, "UTF-8"		     );}
+if (stream_UID_options == null || stream_UID_options == undefined) {  file_UID_options.openStream("w", function(fs) { stream_UID_options=fs;   }, function(e) {	box = document.querySelector('#textbox12');  box.innerHTML = box.innerHTML + " loadStream "+e.message;			         console.log("Error " + e.message);				       }, "UTF-8"		     );		}
+}
+	//);
+
+function createUserID (){
+	var documentsDir, file_UID;
+	tizen.filesystem.resolve("documents", function(result) 
+	                         {
+	                            documentsDir = result;
+	                            file_UID = documentsDir.createFile("userid.txt");
+	                         });
+    
+	/*var documentsDir;
+	tizen.filesystem.resolve(
+			'documents',
+			function(dir) {
+				documentsDir = dir;
+				dir.listFiles(onsuccess,onFileError);
+			}, function(e) {
+				console.log("Error" + e.message);
+			}, "rw"
+	);
+
+	file_UID = documentsDir.createFile("userid.txt");*/
+}
+function cancel(){
+	console.log("Entered cancel button");
+	return window.location.href = "index.html";
+}
+function checkUsers(){
+		console.log("Entered function");
+		console.log("try %o", file_UID_options);
+		  if ($('#userid').val() == null || $('#userid').val() == undefined) {
+				return;
+		  }		
+		//if($('#userid').val() == null || $('#userid').val() == undefined) {return ;}
+		onErrorUser();
+		//if (stream_UID_options == null || stream_UID_options == undefined) { onErrorUser();}
+		return window.location.href = "index.html";
+		/*					  		
+	try {
+		file_UID.readAsText(
+		function(contents) {
+		console.log('File contents:' + contents);
+		if (contents == "" || contents == null){
+			onErrorUser();
+		}
+		window.location.href = "index.html";
+	},	 
+	onErrorUser	
+	);
+	} catch (exc) {
+	console.log('readAsText() exception:' + exc.message + '');
+	}	
+		*/
+	  }
+	  function onErrorUser(){
+		  if (stream_UID_options == null || stream_UID_options == undefined) {  file_UID_options.openStream("w", function(fs) { stream_UID_options=fs;}, function(e) {box = document.querySelector('#textbox12');  box.innerHTML = box.innerHTML + " stream "+e.message; console.log("Error " + e.message);				       }, "UTF-8"		     );		}		   
+		  userID = $('#userid').val();
+		  box = document.querySelector('#textbox12');
+		  box.innerHTML = box.innerHTML + " user "+userID;	  
+		  stream_UID_options.write(userID);
+		  stream_UID_options.close();	  	  
+	}		  
+    </script>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="ui-page ui-page-active" id="mains">
+	<div style='margin: auto; width:100%;' id="mains">
+		<input type="text" id="userid" placeholder="Enter your name here" />
+		<input name="buttonExecute" class="btn-execute" onclick="checkUsers();" type="button" value="OK" />
+		<input name="buttonExecute" class="btn-execute" onclick="cancel();" type="button" value="Cancel" />
+		<div style="margin: auto; width:100%;">
+		<span class="content_text" id="textbox12">Errors: </span>
+	</div>	
+	</div>	
+</div>				
+</body>
+</html>

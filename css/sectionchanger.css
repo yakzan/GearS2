@@ -1,0 +1,4 @@
+.ui-content section {
+	overflow: hidden;
+	overflow-y: auto;
+}

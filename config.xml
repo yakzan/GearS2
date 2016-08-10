@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/DUZENLI" version="1.0.0" viewmodes="maximized">
+    <access origin="*" subdomains="true"></access>
+    <tizen:allow-navigation>http://79.123.177.182:8010/ph2015/gear2.php</tizen:allow-navigation>
+    <tizen:allow-navigation>http://192.168.1.4/gear/gear2.php</tizen:allow-navigation>
+    <tizen:application id="J4RNoDRh01.Duzenli" package="J4RNoDRh01" required_version="2.3.1"/>
+    <tizen:category name="com.cmpe.boun.DUZENLI"/>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <feature name="http://tizen.org/api/alarm" required="true"/>
+    <feature name="http://tizen.org/api/alarm.read" required="true"/>
+    <feature name="http://tizen.org/api/alarm.write" required="true"/>
+    <icon src="ubi-health.png"/>
+    <name>Duzenli</name>
+    <tizen:privilege name="http://tizen.org/privilege/power"/>
+    <tizen:privilege name="http://tizen.org/privilege/filesystem.read"/>
+    <tizen:privilege name="http://tizen.org/privilege/alarm"/>
+    <tizen:privilege name="http://tizen.org/privilege/filesystem.write"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.info"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:privilege name="http://tizen.org/privilege/appmanager.certificate"/>
+    <tizen:privilege name="http://tizen.org/privilege/appmanager.kill"/>
+    <tizen:privilege name="http://tizen.org/privilege/content.read"/>
+    <tizen:privilege name="http://tizen.org/privilege/content.write"/>
+    <tizen:privilege name="http://tizen.org/privilege/download"/>
+    <tizen:privilege name="http://tizen.org/privilege/healthinfo"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/location"/>
+    <tizen:privilege name="http://tizen.org/privilege/mediacapture"/>
+    <tizen:privilege name="http://tizen.org/privilege/nfc.admin"/>
+    <tizen:privilege name="http://tizen.org/privilege/nfc.cardemulation"/>
+    <tizen:privilege name="http://tizen.org/privilege/nfc.common"/>
+    <tizen:privilege name="http://tizen.org/privilege/nfc.p2p"/>
+    <tizen:privilege name="http://tizen.org/privilege/nfc.tag"/>
+    <tizen:privilege name="http://tizen.org/privilege/notification"/>
+    <tizen:privilege name="http://tizen.org/privilege/package.info"/>
+    <tizen:privilege name="http://tizen.org/privilege/push"/>
+    <tizen:privilege name="http://tizen.org/privilege/secureelement"/>
+    <tizen:privilege name="http://tizen.org/privilege/setting"/>
+    <tizen:privilege name="http://tizen.org/privilege/system"/>
+    <tizen:privilege name="http://tizen.org/privilege/unlimitedstorage"/>
+    <tizen:privilege name="http://tizen.org/privilege/volume.set"/>
+    <tizen:profile name="wearable"/>
+    <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable"/>
+</widget>
