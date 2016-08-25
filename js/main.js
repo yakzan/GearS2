@@ -114,6 +114,19 @@ function onErrorUser() {
 }
  */
 
+var MODEL="";
+
+function onSuccess_build(device) {
+    //alert("Device Model =" + device.model + " Manufacturer = " + device.manufacturer);
+	MODEL = device.model;
+}
+
+ function onError_build(error) {
+    //alert("Not supported: " + error.message);
+	 
+}
+
+
 function onerror () {
 	stream_ERR.write(new Date()+" Error with XHR\n");
 }
@@ -680,7 +693,7 @@ window.onload = function() {
 	 * box.innerHTML = "Not supoorted really"; }
 	 */
 
-
+	tizen.systeminfo.getPropertyValue("BUILD", onSuccess_build, onError_build);
 	
 	battery.onlevelchange = function() {
 		console.log(battery.level);
@@ -947,7 +960,7 @@ function startSensing(){
 			lightSensor.start(onsuccessCB);
 		}
 
-		if(uvl) {
+		if(uvl && (MODEL.indexOf('2') !== -1)) {
 			var ultravioletSensor = window.webapis.sensorservice
 			.getDefaultSensor("ULTRAVIOLET");
 			ultravioletSensor.setChangeListener(onGetSuccessUV);
@@ -1623,8 +1636,7 @@ function goToSurvey() {
 		stream_ERR.write(new Date()+" alarm id: "+alarm1.id+"\n");
 		html = "Tiem to survey alarm";
 		document.getElementById("textbox9").innerHTML = html;
-		stream_ERR.write(new Date() + "\t" + "ajaxSuccess " + data
-				+ "\n");
+		stream_ERR.write(new Date() + "\t" + "ajaxSuccess " + date + "\n");
 	}	
 }
 
@@ -1689,11 +1701,11 @@ function onreadystatechangehandler(e) {
 			return;
 		}
 		else {
-			stream_ERR.write(new Date()+"\t"+"serverError "+JSON.stringify(e)+"\n")
+			stream_ERR.write(new Date()+"\t"+"serverError "+JSON.stringify(e)+"\n");
 		}
 	}
 	else {
-		stream_ERR.write(new Date()+"\t"+"readyState "+this.readyState+"\n")
+		stream_ERR.write(new Date()+"\t"+"readyState "+this.readyState+"\n");
 	}
 }
 
