@@ -31,14 +31,14 @@ function handleClick(){
 	}
 
 		
-	if (file_UID_options != null) {  
+	if (file_UID_options !== null) {  
 		file_UID_options.openStream("w", function(fs) { 
 			stream_UID_options=fs; 		       
 		}, function(e) {	
 			console.log("Error " + e.message);	
 			}, "UTF-8");
 	}
-	if (stream_UID_options == null || stream_UID_options == undefined) {  
+	if (stream_UID_options === null || stream_UID_options === undefined) {  
 		file_UID_options.openStream("w", 
 			function(fs) { stream_UID_options=fs;}, 
 			function(e) { box = document.querySelector('#textbox12');  
@@ -106,7 +106,7 @@ console.log('readAsText() exception:' + exc.message + '');
 	*/
 }
  function onErrorUser(){
-	 if (stream_UID_options == null || stream_UID_options == undefined) { 
+	 if (stream_UID_options === null || stream_UID_options === undefined) { 
 		 file_UID_options.openStream("w", 
 				 function(fs) { stream_UID_options=fs;}, 
 				 function(e) {

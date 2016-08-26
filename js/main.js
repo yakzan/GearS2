@@ -12,8 +12,7 @@ var acc_xhr_ctr = 0;
 
 var file_PED, file_ACC, file_LGT, file_MGN, file_HRT, file_UVL, file_GPS, file_UID, avg_file_NTW, stream_ACC, stream_PED, stream_LGT, stream_MGN, stream_HRT, stream_UVL, stream_GPS, stream_UID, avg_stream_NTW;
 var batteryLevel = 100;
-var battery = navigator.battery || navigator.webkitBattery
-|| navigator.mozBattery;
+var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery;
 
 var avg_file_PED, avg_file_ACC, avg_file_LGT, avg_file_MGN, avg_file_HRT, avg_file_UVL, avg_file_GPS, avg_file_UID, avg_file_PRE,  avg_stream_ACC, avg_stream_PED, avg_stream_LGT, avg_stream_MGN, avg_stream_HRT, avg_stream_UVL, avg_stream_GPS, avg_stream_UID, avg_stream_PRE;
 var avg_acc_x = 0, avg_acc_y = 0, avg_acc_z = 0, avg_acc_alpha = 0, avg_acc_beta = 0, avg_acc_gamma = 0;
@@ -61,7 +60,7 @@ function deleteFiles(files) {
 
 /*
 function checkUserID() {
-	if (documentsDir == null) {
+	if (documentsDir === null) {
 		tizen.filesystem.resolve('documents', function(dir) {
 			documentsDir = dir;
 		}, function(e) {
@@ -81,7 +80,7 @@ function checkUserID() {
 	try {
 		file.readAsText(function(contents) {
 			console.log('File contents:' + contents);
-			if (contents == "" || contents == null) {
+			if (contents === "" || contents === null) {
 				onErrorUser();
 			}
 		},
@@ -119,7 +118,7 @@ var MODEL="";
 function onSuccess_build(device) {
     //alert("Device Model =" + device.model + " Manufacturer = " + device.manufacturer);
 	MODEL = device.model;
-	box = document.querySelector('#textbox9');
+	var box = document.querySelector('#textbox9');
 	box.innerHTML=MODEL;
 }
 
@@ -143,9 +142,9 @@ function onsuccess(files) {
 		d = new Date();
 		file_PED = documentsDir.createFile("PED_" + d.getTime() + ".txt");
 		file_ACC = documentsDir.createFile("ACC_" + d.getTime() + ".txt");
-		file_UVL = documentsDir.createFile("UVL_" + d.getTime() + ".txt");
+		//file_UVL = documentsDir.createFile("UVL_" + d.getTime() + ".txt");
+		//file_MGN = documentsDir.createFile("MGN_" + d.getTime() + ".txt");
 		file_LGT = documentsDir.createFile("LGT_" + d.getTime() + ".txt");
-		file_MGN = documentsDir.createFile("MGN_" + d.getTime() + ".txt");
 		file_HRT = documentsDir.createFile("HRT_" + d.getTime() + ".txt");
 		file_GPS = documentsDir.createFile("GPS_" + d.getTime() + ".txt");
 		file_LBL = documentsDir.createFile("avg_LBL_" + d.getTime() + ".txt");
@@ -160,7 +159,7 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 
-		if (file_ACC != null) {
+		if (file_ACC !== null) {
 			file_ACC.openStream("w", function(fs) {
 				stream_ACC = fs;
 				startSensing();
@@ -169,15 +168,23 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 
-		if (file_UVL != null) {
-			file_UVL.openStream("w", function(fs) {
-				stream_UVL = fs;
-			}, function(e) {
-				console.log("Error " + e.message);
-			}, "UTF-8");
-		}
-
-		if (file_LGT != null) {
+//		if (file_UVL !== null) {
+//			file_UVL.openStream("w", function(fs) {
+//				stream_UVL = fs;
+//			}, function(e) {
+//				console.log("Error " + e.message);
+//			}, "UTF-8");
+//		}
+//
+//		if (file_MGN !== null) {
+//			file_MGN.openStream("w", function(fs) {
+//				stream_MGN = fs;
+//			}, function(e) {
+//				console.log("Error " + e.message);
+//			}, "UTF-8");
+//		}
+		
+		if (file_LGT !== null) {
 			file_LGT.openStream("w", function(fs) {
 				stream_LGT = fs;
 			}, function(e) {
@@ -185,15 +192,7 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 
-		if (file_MGN != null) {
-			file_MGN.openStream("w", function(fs) {
-				stream_MGN = fs;
-			}, function(e) {
-				console.log("Error " + e.message);
-			}, "UTF-8");
-		}
-
-		if (file_HRT != null) {
+		if (file_HRT !== null) {
 			file_HRT.openStream("w", function(fs) {
 				stream_HRT = fs;
 			}, function(e) {
@@ -201,7 +200,7 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 
-		if (file_GPS != null) {
+		if (file_GPS !== null) {
 			file_GPS.openStream("w", function(fs) {
 				stream_GPS = fs;
 			}, function(e) {
@@ -214,7 +213,7 @@ function onsuccess(files) {
 		/* end of avg files */
 
 		file_ERR = documentsDir.createFile("ERR_" + d.getTime() + ".txt");
-		if (file_ERR != null) {
+		if (file_ERR !== null) {
 			file_ERR.openStream("w", function(fs) {
 				stream_ERR = fs;
 			}, function(e) {
@@ -222,7 +221,7 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 
-		if (file_LBL != null) {
+		if (file_LBL !== null) {
 			file_LBL.openStream("w", function(fs) {
 				stream_LBL = fs;
 			}, function(e) {
@@ -230,7 +229,7 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 
-		if (file_WIF != null) {
+		if (file_WIF !== null) {
 			file_WIF.openStream("w", function(fs) {
 				stream_WIF = fs;
 			}, function(e) {
@@ -238,7 +237,7 @@ function onsuccess(files) {
 			}, "UTF-8");
 		}
 		
-		if (file_PRE != null) {
+		if (file_PRE !== null) {
 			file_PRE.openStream("w", function(fs) {
 				stream_PRE = fs;
 			}, function(e) {
@@ -259,7 +258,7 @@ function onsuccess(files) {
 function onSuccessCallback(e) {
 
 	$('#textbox8').html("Changed " + e.networkType);
-	if (e.networkType == 'NONE' || e.networkType == 'UNKNOWN'){
+	if (e.networkType === 'NONE' || e.networkType === 'UNKNOWN'){
 		stream_ERR.write(new Date()+"\t Network changed to "+e.networkType+"\n");
 		networkConnected = false;
 	}	
@@ -271,9 +270,9 @@ function onSuccessCallback(e) {
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_ntw.getTime() >= AVG_PERIOD ){ 
 		if (networkConnected){
-			if (networkType == 'WIFI') {
+			if (networkType === 'WIFI') {
 				avg_stream_NTW.write(date_now.getTime() + "\t" + 1 + "\t"+ 1 + "\t" + userID +"\n");
-			}else if (networkType == 'ETHERNET') {
+			}else if (networkType === 'ETHERNET') {
 				avg_stream_NTW.write(date_now.getTime() + "\t" + 1 + "\t"+ 2 + "\t" + userID +"\n");
 			}else {
 				avg_stream_NTW.write(date_now.getTime() + "\t" + 1 + "\t"+ 3 + "\t" + userID +"\n");
@@ -302,7 +301,7 @@ var networkConnected = false;
 function onNetworkSuccessCallback(e) {
 	//$('#textbox8').html("Network type: " + e.networkType);
 	networkType = e.networkType;
-	if (e.networkType == 'NONE' || e.networkType == 'UNKNOWN'){
+	if (e.networkType === 'NONE' || e.networkType === 'UNKNOWN'){
 		stream_ERR.write(new Date()+"\t No network\n");
 		networkConnected = false;
 	}
@@ -315,7 +314,7 @@ function onNetworkSuccessCallback(e) {
 
 String.prototype.hashCode = function() {
 	var hash = 0, i, chr, len;
-	if (this.length == 0)
+	if (this.length === 0)
 		return hash;
 	for (i = 0, len = this.length; i < len; i++) {
 		chr = this.charCodeAt(i);
@@ -356,7 +355,7 @@ function createAvgFiles(documentsDir, d){
 		avg_file_PRE = documentsDir.createFile("avg_PRE_" + d.getTime()
 				+ ".txt");		
 
-		if (avg_file_PED != null) {
+		if (avg_file_PED !== null) {
 			avg_file_PED.openStream("w", function(fs) {
 				avg_stream_PED = fs;
 			}, function(e) {
@@ -364,7 +363,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_ACC != null) {
+		if (avg_file_ACC !== null) {
 			avg_file_ACC.openStream("w", function(fs) {
 				avg_stream_ACC = fs;
 				streamsClosed = false; //the most needed stream, hence serves as guide if streams were created in time
@@ -373,7 +372,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_UVL != null) {
+		if (avg_file_UVL !== null) {
 			avg_file_UVL.openStream("w", function(fs) {
 				avg_stream_UVL = fs;
 			}, function(e) {
@@ -381,7 +380,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_PRE != null) {
+		if (avg_file_PRE !== null) {
 			avg_file_PRE.openStream("w", function(fs) {
 				avg_stream_PRE = fs;
 			}, function(e) {
@@ -389,7 +388,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 		
-		if (avg_file_LGT != null) {
+		if (avg_file_LGT !== null) {
 			avg_file_LGT.openStream("w", function(fs) {
 				avg_stream_LGT = fs;
 			}, function(e) {
@@ -397,7 +396,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_MGN != null) {
+		if (avg_file_MGN !== null) {
 			avg_file_MGN.openStream("w", function(fs) {
 				avg_stream_MGN = fs;
 			}, function(e) {
@@ -405,7 +404,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_HRT != null) {
+		if (avg_file_HRT !== null) {
 			avg_file_HRT.openStream("w", function(fs) {
 				avg_stream_HRT = fs;
 			}, function(e) {
@@ -413,7 +412,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_GPS != null) {
+		if (avg_file_GPS !== null) {
 			avg_file_GPS.openStream("w", function(fs) {
 				avg_stream_GPS = fs;
 			}, function(e) {
@@ -421,7 +420,7 @@ function createAvgFiles(documentsDir, d){
 			}, "UTF-8");
 		}
 
-		if (avg_file_NTW != null) {
+		if (avg_file_NTW !== null) {
 			avg_file_NTW.openStream("w", function(fs) {
 				avg_stream_NTW = fs;
 			}, function(e) {
@@ -474,7 +473,7 @@ var screenState=1;
 
 function onScreenStateChanged(previousState, changedState) {
 	console.log("Screen state changed from " + previousState + " to " + changedState);
-	if ( changedState === "SCREEN_OFF" && screenToggle == 1 && screenState == 1) {
+	if ( changedState === "SCREEN_OFF" && screenToggle === 1 && screenState === 1) {
 		tizen.power.turnScreenOn();
 		tizen.power.setScreenBrightness(0.01);
 	}
@@ -487,7 +486,7 @@ function handleClick(){
 }
 
 function ctsSensing(){
-	if (ctsSense == 0) { 
+	if (ctsSense === 0) { 
 		//tizen.power.request("CPU", "CPU_AWAKE");
 		ctsSense = 1; 
 		box = document.querySelector('#cpuState');
@@ -624,7 +623,7 @@ window.onload = function() {
 	tizen.power.setScreenBrightness(0.1);
 	
 	tizen.power.setScreenStateChangeListener(onScreenStateChanged);
-//	if (screenToggle == 0 ){		
+//	if (screenToggle === 0 ){		
 	resetAlarms();
 //	}
 	/*
@@ -669,7 +668,7 @@ window.onload = function() {
 		vibrateOn = 0;
 		//screenToggle = 1;
 		
-		if (screenToggle == 1){
+		if (screenToggle === 1){
 			screenToggle = 0;			
 		}
 		else {
@@ -721,7 +720,7 @@ window.onload = function() {
 				"r",
 				function(fs){
 					stream_UID = fs;
-					if (file_UID.fileSize == 0){
+					if (file_UID.fileSize === 0){
 						userFileOpen = 1;
 						fs.close();						
 						writeUser("hasta");
@@ -746,7 +745,7 @@ window.onload = function() {
 	
 	xmlhttp.onreadystatechange = function() {
 
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			res = xmlhttp.responseText;
 			ctrOK++;
 
@@ -763,7 +762,7 @@ window.onload = function() {
 
 	/*
 	document.addEventListener('tizenhwkey', function(e) {
-		if (e.keyName == "back") {
+		if (e.keyName === "back") {
 			stream_ACC.close();
 			stream_PED.close();
 			stream_LGT.close();
@@ -796,7 +795,7 @@ window.onload = function() {
 	 */
 	//tizen.application.getCurrentApplication().exit();
 	time2send = setTimeout(function(){ 
-		getGeoLocation();
+		//getGeoLocation();
 		try {
 			tizen.systeminfo.getPropertyValue("NETWORK", onNetworkSuccessCallback, onErrorWifi);
 			tizen.systeminfo.getPropertyValue("WIFI_NETWORK",  onNetworkSuccessCallbackWIFI, onErrorWifi);
@@ -808,20 +807,20 @@ window.onload = function() {
 		//XHRTimer();		
 		}, screenOffTime);
 	
-	time2exit = setTimeout(function(){ 
-		tizen.application.getCurrentApplication().exit();
-		tizen.power.turnScreenOff();	
-		}, screenOffTime + 15*1000);
-	
-	try {
-	tizen.systeminfo.getPropertyValue("NETWORK", onNetworkSuccessCallback, onErrorWifi);
-	tizen.systeminfo.getPropertyValue("WIFI_NETWORK",  onNetworkSuccessCallbackWIFI, onErrorWifi);
-	tizen.systeminfo.addPropertyValueChangeListener("NETWORK", onSuccessCallback, onErrorWifi);
-	tizen.systeminfo.addPropertyValueChangeListener("WIFI_NETWORK", onSuccessCallbackWIFI, onErrorWifi);
-	}
-	catch (e){
-		stream_ERR.write(new Date() + "\t network error: " + e +"\n" );
-	}		
+//	time2exit = setTimeout(function(){ 
+//		tizen.application.getCurrentApplication().exit();
+//		tizen.power.turnScreenOff();	
+//		}, screenOffTime + 15*1000);
+	//Removing for S2 integration
+//	try {
+//	tizen.systeminfo.getPropertyValue("NETWORK", onNetworkSuccessCallback, onErrorWifi);
+//	tizen.systeminfo.getPropertyValue("WIFI_NETWORK",  onNetworkSuccessCallbackWIFI, onErrorWifi);
+//	tizen.systeminfo.addPropertyValueChangeListener("NETWORK", onSuccessCallback, onErrorWifi);
+//	tizen.systeminfo.addPropertyValueChangeListener("WIFI_NETWORK", onSuccessCallbackWIFI, onErrorWifi);
+//	}
+//	catch (e){
+//		stream_ERR.write(new Date() + "\t network error: " + e +"\n" );
+//	}		
 
 }
 
@@ -835,7 +834,7 @@ function onGetSuccessPRE(sensorData) {
 	
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_pre.getTime() >= AVG_PERIOD || (count_pre >= sampleCounter && !tizen.power.isScreenOn())){ 
-		if (count_pre != 0) {
+		if (count_pre !== 0) {
 			avg_stream_PRE.write(date_now.getTime() + "\t" + count_pre + "\t"
 					+ avg_pre / count_pre + "\t"+userID + "\n");
 			avg_pre = 0;
@@ -868,7 +867,7 @@ var time2exit;
 
 function writeUser(uname){
 	/*
-	if (stream_UID != null ){
+	if (stream_UID !== null ){
 		stream_UID.close();
 	}
 	*/
@@ -1065,7 +1064,7 @@ function onChangedACC(e) {
 //	console.log("ACC: \t" + d.getTime() + "\t" + batteryLevel + "\t"
 //	+ e.acceleration.x + "\t" + (-1) * e.acceleration.y + "\t" + (-1)
 //	* e.acceleration.z);	
-	if (avg_acc_x == null || avg_acc_x == 0) {
+	if (avg_acc_x === null || avg_acc_x === 0) {
 		avg_acc_x = Math.sqrt(Math.pow(e.acceleration.x,2) + Math.pow(e.acceleration.y,2) + Math.pow(e.acceleration.z,2));
 		//avg_acc_x = Math.abs(e.acceleration.x);
 		avg_acc_y = Math.abs(e.acceleration.y);
@@ -1087,7 +1086,7 @@ function onChangedACC(e) {
 
 	var now_time = new Date();
 	if ( now_time.getTime() - last_avg_time_acc.getTime() >= AVG_PERIOD || ( count_acc >= sampleCounter && !tizen.power.isScreenOn())){ 
-		if (count_acc != 0) {
+		if (count_acc !== 0) {
 			avg_stream_ACC.write(now_time.getTime() + "\t" + count_acc + "\t"
 					+ batteryLevel + "\t" + avg_acc_x / count_acc + "\t" + (-1)
 					* avg_acc_y / count_acc + "\t" + (-1) * avg_acc_z / count_acc
@@ -1284,17 +1283,17 @@ function onchangedPED(pedometerInfo) {
 			+ pedometerInfo.walkingFrequency + "\t"
 			+ pedometerInfo.cumulativeTotalStepCount + "\n");
 	var stepStatus;
-	if (pedometerInfo.stepStatus == "NOT_MOVING") {
+	if (pedometerInfo.stepStatus === "NOT_MOVING") {
 		stepStatus = 0;
-	} else if (pedometerInfo.stepStatus == "WALKING") {
+	} else if (pedometerInfo.stepStatus === "WALKING") {
 		stepStatus = 1;
-	} else if (pedometerInfo.stepStatus == "RUNNING") {
+	} else if (pedometerInfo.stepStatus === "RUNNING") {
 		stepStatus = 2;
 	} else {
 		stepStatus = 3;
 	}
 
-	if (avg_ped_stepStatus == null || avg_ped_stepStatus == 0) {
+	if (avg_ped_stepStatus === null || avg_ped_stepStatus === 0) {
 		avg_ped_stepStatus = stepStatus;
 		avg_ped_speed = pedometerInfo.speed;
 		avg_ped_walkingFrequency = pedometerInfo.walkingFrequency;
@@ -1316,7 +1315,7 @@ function onchangedPED(pedometerInfo) {
 
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_ped.getTime() >= AVG_PERIOD || ( count_ped >= sampleCounter && !tizen.power.isScreenOn())){ 
-		if (count_ped != 0) {
+		if (count_ped !== 0) {
 			avg_stream_PED.write(date_now.getTime() + "\t" + count_ped
 					+ "\t" + avg_ped_stepStatus / count_ped + "\t"
 					+ avg_ped_speed / count_ped + "\t" + avg_ped_walkingFrequency
@@ -1342,7 +1341,7 @@ function onGetSuccessCB(sensorData) {
 	var d = new Date();
 	stream_LGT.write(d.getTime() + "\t" + sensorData.lightLevel + "\n");
 
-	if (avg_lgt == null || avg_lgt == 0) {
+	if (avg_lgt === null || avg_lgt === 0) {
 		avg_lgt = sensorData.lightLevel;
 	} else {
 		avg_lgt += sensorData.lightLevel;
@@ -1351,7 +1350,7 @@ function onGetSuccessCB(sensorData) {
 
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_lgt.getTime() >= AVG_PERIOD || ( count_lgt >= sampleCounter && !tizen.power.isScreenOn()) ){ 
-		if (count_lgt != 0) {
+		if (count_lgt !== 0) {
 			avg_stream_LGT.write(date_now.getTime() + "\t" + count_lgt + "\t"
 					+ avg_lgt / count_lgt + "\t"+userID + "\n");
 			avg_lgt = 0;
@@ -1371,21 +1370,20 @@ function onsuccessCB() {
 
 var UV_THRESHOLD = 0.1;
 
-function onGetSuccessUV(sensorData) {
+/*function onGetSuccessUV(sensorData) {
 
-	//console.log("ultraviolet level : " + sensorData.ultravioletLevel);
 	box = document.querySelector('#textbox2');
 	box.innerHTML = "UV: " + sensorData.ultravioletLevel;
 	var d = new Date();
 	stream_UVL.write(d.getTime() + "\t" + sensorData.ultravioletLevel + "\n");
 
 	if ( gps ){
-/*		if ( sensorData.ultravioletLevel >= UV_THRESHOLD ){
+		if ( sensorData.ultravioletLevel >= UV_THRESHOLD ){
 			getGeoLocation();
-		}*/
+		}
 	}
 	
-	if (avg_uvl == null || avg_uvl == 0) {
+	if (avg_uvl === null || avg_uvl === 0) {
 		avg_uvl = sensorData.ultravioletLevel;
 	} else {
 		avg_uvl += sensorData.ultravioletLevel;
@@ -1394,7 +1392,7 @@ function onGetSuccessUV(sensorData) {
 
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_uvl.getTime() >= AVG_PERIOD || (count_uvl >= sampleCounter && !tizen.power.isScreenOn())){ 
-		if (count_uvl != 0) {
+		if (count_uvl !== 0) {
 			avg_stream_UVL.write(date_now.getTime() + "\t" + count_uvl + "\t"
 					+ avg_uvl / count_uvl + "\t"+userID + "\n");
 			avg_uvl = 0;
@@ -1427,7 +1425,7 @@ function onGetSuccessMG(sensorData) {
 	stream_MGN.write(d.getTime() + "\t" + sensorData.x + "\t" + sensorData.y
 			+ "\t" + sensorData.z + "\n");
 
-	if (avg_mgn_x == null || avg_mgn_x == 0) {
+	if (avg_mgn_x === null || avg_mgn_x === 0) {
 		avg_mgn_x = sensorData.x;
 		avg_mgn_y = sensorData.y;
 		avg_mgn_z = sensorData.z;
@@ -1440,7 +1438,7 @@ function onGetSuccessMG(sensorData) {
 
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_mgn.getTime() >= AVG_PERIOD || (count_mgn >= sampleCounter && !tizen.power.isScreenOn()) ){ 
-		if (count_mgn != 0) {
+		if (count_mgn !== 0) {
 			avg_stream_MGN.write(date_now.getTime() + "\t" + count_mgn + "\t"
 					+ avg_mgn_x / count_mgn + "\t" + avg_mgn_y / count_mgn + "\t"
 					+ avg_mgn_z / count_mgn  + "\t"+userID + "\n");
@@ -1478,7 +1476,7 @@ function onchangedGPS(gpsInfo) {
 
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_gps.getTime() >= AVG_PERIOD ){ 
-		if (count_gps != 0) {
+		if (count_gps !== 0) {
 			avg_stream_GPS.write(date_now.getTime() + "\t" + count_gps + "\t"
 					+ avg_gps_x / count_gps + "\t" + avg_gps_y / count_gps + "\t"+userID + "\n");
 			avg_gps_x = 0;
@@ -1499,15 +1497,15 @@ function onchangedGPS2(gpsInfo) {
 
 	stream_GPS.write(new Date().getTime() + "\t" + gpsInfo.coords.latitude + "\t"+ gpsInfo.coords.longitude + "\n");		
 	
-	/*if (gpsInfo.coords.latitude && gpsInfo.coords.latitude !== 'undefined') {
+	if (gpsInfo.coords.latitude && gpsInfo.coords.latitude !== 'undefined') {
 		stream_GPS.write(d.getTime() + "\t" + gpsInfo.coords.latitude + "\t"
 				+ gpsInfo.coords.longitude + "\n");		
 	}
 	else{
 		stream_ERR.write(new Date() + "GPS undefined\n");
 	} 
-*/
-	if (avg_gps_x == null || avg_gps_x == 0) {
+
+	if (avg_gps_x === null || avg_gps_x === 0) {
 		avg_gps_x = gpsInfo.coords.latitude;
 		avg_gps_y = gpsInfo.coords.longitude;
 	} else {
@@ -1518,7 +1516,7 @@ function onchangedGPS2(gpsInfo) {
 
 	var date_now = new Date();
 	//if ( date_now.getTime() - last_avg_time_gps.getTime() >= AVG_PERIOD || ( count_gps >= sampleCounter && !tizen.power.isScreenOn()) ){ 
-		if (count_gps != 0) {
+		if (count_gps !== 0) {
 			avg_stream_GPS.write(date_now.getTime() + "\t" + count_gps + "\t"
 					+ avg_gps_x / count_gps + "\t" + avg_gps_y / count_gps + "\t"+userID + "\n");
 			avg_gps_x = 0;
@@ -1532,7 +1530,7 @@ function onchangedGPS2(gpsInfo) {
 	// gpsInfo.latitude+"\t" +gpsInfo.longitude
 	// +"\t"+gpsInfo.altitude+"\t"+gpsInfo.speed+"\t"+gpsInfo.errorRange+"\t"+gpsInfo.timestamp);
 }
-
+*/
 function onchangedHR(hrmInfo) {
 
 	box = document.querySelector('#textbox4');
@@ -1543,7 +1541,7 @@ function onchangedHR(hrmInfo) {
 		stream_HRT.write(d.getTime() + "\t" + hrmInfo.heartRate + "\t"
 				+ hrmInfo.rRInterval + "\n");
 
-		if (avg_hrt_rate == null || avg_hrt_rate === 0) {
+		if (avg_hrt_rate === null || avg_hrt_rate === 0) {
 			avg_hrt_rate = hrmInfo.heartRate;
 			avg_hrt_interval = hrmInfo.rRInterval;
 		} else {
@@ -1555,7 +1553,7 @@ function onchangedHR(hrmInfo) {
 
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_hrt.getTime() >= AVG_PERIOD || ( count_hrt >= sampleCounter && !tizen.power.isScreenOn()) ){ 
-		if (count_hrt != 0) {
+		if (count_hrt !== 0) {
 			avg_stream_HRT.write(date_now.getTime() + "\t" + count_hrt + "\t"
 					+ avg_hrt_rate / count_hrt + "\t" + avg_hrt_interval
 					/ count_hrt + "\t"+userID + "\n");
@@ -1696,8 +1694,8 @@ function onloadendhandler(e) {
 //event occured when the readyState attribute changes at some seemingly
 //arbitrary times for historical reasons
 function onreadystatechangehandler(e) {
-	if (this.readyState == this.DONE) {
-		if (this.status == 200 && this.responseXML != null) {
+	if (this.readyState === this.DONE) {
+		if (this.status === 200 && this.responseXML !== null) {
 			document.getElementById("textbox9").innerHTML = this.responseText;
 			stream_ERR.write(new Date()+"\t"+"serverResponse "+this.responseText+"\n");
 			return;
@@ -1718,7 +1716,7 @@ function onFileError(error) {
 function takeAverage(date_now) {
 	stream_ERR.write(new Date() + " starting averaging\n");
 
-	if (count_acc != 0) {
+	if (count_acc !== 0) {
 		avg_stream_ACC.write(date_now.getTime() + "\t" + count_acc + "\t"
 				+ batteryLevel + "\t" + avg_acc_x / count_acc + "\t" + (-1)
 				* avg_acc_y / count_acc + "\t" + (-1) * avg_acc_z / count_acc
@@ -1734,7 +1732,7 @@ function takeAverage(date_now) {
 		count_battery = 0;
 	}
 
-	if (count_mgn != 0) {
+	if (count_mgn !== 0) {
 		avg_stream_MGN.write(date_now.getTime() + "\t" + count_mgn + "\t"
 				+ avg_mgn_x / count_mgn + "\t" + avg_mgn_y / count_mgn + "\t"
 				+ avg_mgn_z / count_mgn  + "\t"+userID + "\n");
@@ -1744,28 +1742,28 @@ function takeAverage(date_now) {
 		count_mgn = 0;
 	}
 
-	if (count_lgt != 0) {
+	if (count_lgt !== 0) {
 		avg_stream_LGT.write(date_now.getTime() + "\t" + count_lgt + "\t"
 				+ avg_lgt / count_lgt + "\t"+userID + "\n");
 		avg_lgt = 0;
 		count_lgt = 0;
 	}
 
-	if (count_uvl != 0) {
+	if (count_uvl !== 0) {
 		avg_stream_UVL.write(date_now.getTime() + "\t" + count_uvl + "\t"
 				+ avg_uvl / count_uvl + "\t"+userID + "\n");
 		avg_uvl = 0;
 		count_uvl = 0;
 	}
 
-	if (count_pre != 0) {
+	if (count_pre !== 0) {
 		avg_stream_PRE.write(date_now.getTime() + "\t" + count_pre + "\t"
 				+ avg_pre / count_pre + "\t"+userID + "\n");
 		avg_pre = 0;
 		count_pre = 0;
 	}
 	
-	if (count_ped != 0) {
+	if (count_ped !== 0) {
 		avg_stream_PED.write(date_now.getTime() + "\t" + count_ped + "\t"
 				+ batteryLevel + "\t" + avg_ped_stepStatus / count_ped + "\t"
 				+ avg_ped_speed / count_ped + "\t" + avg_ped_walkingFrequency
@@ -1778,7 +1776,7 @@ function takeAverage(date_now) {
 		count_ped = 0;
 	}
 
-	if (count_gps != 0) {
+	if (count_gps !== 0) {
 		avg_stream_GPS.write(date_now.getTime() + "\t" + count_gps + "\t"
 				+ avg_gps_x / count_gps + "\t" + avg_gps_y / count_gps + "\t"+userID + "\n");
 		avg_gps_x = 0;
@@ -1786,7 +1784,7 @@ function takeAverage(date_now) {
 		count_gps = 0;
 	}
 
-	if (count_hrt != 0) {
+	if (count_hrt !== 0) {
 		avg_stream_HRT.write(date_now.getTime() + "\t" + count_hrt + "\t"
 				+ avg_hrt_rate / count_hrt + "\t" + avg_hrt_interval
 				/ count_hrt + "\t"+userID + "\n");
@@ -1796,9 +1794,9 @@ function takeAverage(date_now) {
 	}
 
 	if (networkConnected){
-		if (networkType == 'WIFI') {
+		if (networkType === 'WIFI') {
 			avg_stream_NTW.write(date_now.getTime() + "\t" + 1 + "\t"+ 1 + "\t" + userID +"\n");
-		}else if (networkType == 'ETHERNET') {
+		}else if (networkType === 'ETHERNET') {
 			avg_stream_NTW.write(date_now.getTime() + "\t" + 1 + "\t"+ 2 + "\t" + userID +"\n");
 		}else {
 			avg_stream_NTW.write(date_now.getTime() + "\t" + 1 + "\t"+ 3 + "\t" + userID +"\n");
@@ -1861,7 +1859,7 @@ function onsuccessSort(files)
 
 	stream_ERR.write(new Date()+"\t sorting \n");
 	for (var i = 0; i < files.length  ; i++) { 
-		if (files[i].fileSize == 0	){
+		if (files[i].fileSize === 0	){
 			documentsDir.deleteFile(files[i].fullPath,function(){stream_ERR.write(new Date + " File deleted\n")});
 			continue;
 		}
@@ -1879,7 +1877,7 @@ function onsuccessSort(files)
 		//}
 	}
 
-	if (listOfFilesToRead.length == 0){
+	if (listOfFilesToRead.length === 0){
 		stream_ERR.write(new Date() + " no files found to be sent.\n");
 		return;		
 	}	
@@ -1895,7 +1893,7 @@ function onsuccessSort(files)
 				file_UID.openStream(
 						"r",
 						function(fs){
-							if (file_UID.fileSize == 0){
+							if (file_UID.fileSize === 0){
 								return;
 							}
 							userID = fs.read(file_UID.fileSize);
@@ -1946,7 +1944,7 @@ function sendFiles() {
 	// xmlhttp.open("POST", url, true);
 	// xmlhttp.setRequestHeader("Content-type",
 	// "application/x-www-form-urlencoded");
-	if (listOfFilesToRead.length == 0) {
+	if (listOfFilesToRead.length === 0) {
 		stream_ERR.write(new Date() + "No files to send\n");
 
 	}
@@ -1961,7 +1959,7 @@ function sendFiles() {
 		//console.log("TEMP is " + temp);
 		stream_ERR.write(new Date() + "\nTEMP is " + temp + " \n");
 
-		if (typeof temp === undefined || temp == null) {
+		if (typeof temp === undefined || temp === null) {
 			stream_ERR.write(new Date() + "\nTEMP is null " + temp + " \n");
 			return;
 		}
