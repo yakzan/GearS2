@@ -119,6 +119,8 @@ var MODEL="";
 function onSuccess_build(device) {
     //alert("Device Model =" + device.model + " Manufacturer = " + device.manufacturer);
 	MODEL = device.model;
+	box = document.querySelector('#textbox9');
+	box.innerHTML=MODEL;
 }
 
  function onError_build(error) {
@@ -828,8 +830,8 @@ function onGetSuccessPRE(sensorData) {
 	avg_pre += sensorData.pressure;
     stream_PRE.write(new Date().getTime() + "\t" + sensorData.pressure + "\t" + userID +"\n");
     console.log(new Date() + "PRE : " + sensorData.pressure + "\n");
-	var box = document.querySelector('#textbox9');
-	box.innerHTML =  sensorData.pressure;
+	//var box = document.querySelector('#textbox9');
+	//box.innerHTML =  sensorData.pressure;
 	
 	var date_now = new Date();
 	if ( date_now.getTime() - last_avg_time_pre.getTime() >= AVG_PERIOD || (count_pre >= sampleCounter && !tizen.power.isScreenOn())){ 
@@ -959,19 +961,19 @@ function startSensing(){
 			lightSensor.setChangeListener(onGetSuccessCB);
 			lightSensor.start(onsuccessCB);
 		}
-
-		if(uvl && (MODEL.indexOf('2') !== -1)) {
-			var ultravioletSensor = window.webapis.sensorservice
-			.getDefaultSensor("ULTRAVIOLET");
-			ultravioletSensor.setChangeListener(onGetSuccessUV);
-			ultravioletSensor.start(onsuccessUV);
-		}
-		if(mgn) {
-			var magneticSensor = window.webapis.sensorservice
-			.getDefaultSensor("MAGNETIC");
-			magneticSensor.setChangeListener(onGetSuccessMG);
-			magneticSensor.start(onsuccessMG);
-		}
+//
+//		if(uvl && (MODEL.indexOf('SM-R732') !== -1)) {
+//			var ultravioletSensor = window.webapis.sensorservice
+//			.getDefaultSensor("ULTRAVIOLET");
+//			ultravioletSensor.setChangeListener(onGetSuccessUV);
+//			ultravioletSensor.start(onsuccessUV);
+//		}
+//		if(mgn && (MODEL.indexOf('SM-R732') !== -1)) {
+//			var magneticSensor = window.webapis.sensorservice
+//			.getDefaultSensor("MAGNETIC");
+//			magneticSensor.setChangeListener(onGetSuccessMG);
+//			magneticSensor.start(onsuccessMG);
+//		}
 		if(hrt) {
 			window.webapis.motion.start("HRM", onchangedHR);
 		}
@@ -996,7 +998,7 @@ function startSensing(){
 		
 	} catch (error) {
 		box = document.querySelector('#textbox9');
-		box.innerHTML = error;
+		box.innerHTML = "some my error: " + error;
 		console.log(error);
 		var dd = new Date();
 		stream_ERR.write(dd.getTime() + "\t" + "sensor error: " + error + "\n");
@@ -1820,7 +1822,7 @@ function getGeoLocation() {
 		 
 	} catch (error) {
 		box = document.querySelector('#textbox9');
-		box.innerHTML = error;
+		box.innerHTML = "Geolocation: " + error;
 		var dd = new Date();
 		stream_ERR.write(dd.getTime() + "\t" + "GPS geolocation error: "
 				+ error + "\n");
