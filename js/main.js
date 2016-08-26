@@ -806,6 +806,7 @@ window.onload = function() {
 		//syncConfig(); 
 		//XHRTimer();		
 		}, screenOffTime);
+	
 	//Removing for S2 integration
 //	time2exit = setTimeout(function(){ 
 //		tizen.application.getCurrentApplication().exit();
