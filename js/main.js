@@ -140,16 +140,22 @@ function onsuccess(files) {
 	 */
 	try {
 		d = new Date();
-		file_PED = documentsDir.createFile("PED_" + d.getTime() + ".txt");
-		file_ACC = documentsDir.createFile("ACC_" + d.getTime() + ".txt");
+		//accDir = documentsDir.createDirectory('ACC');
+		mToday= d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear();
+		try {
+			folder_today = documentsDir.createDirectory(mToday);
+		}catch (folder_error){}
+		
+		file_PED = documentsDir.createFile(mToday + "/PED_" + d.getTime() + ".txt");
+		file_ACC = documentsDir.createFile(mToday + "/ACC_" + d.getTime() + ".txt");
 		//file_UVL = documentsDir.createFile("UVL_" + d.getTime() + ".txt");
 		//file_MGN = documentsDir.createFile("MGN_" + d.getTime() + ".txt");
-		file_LGT = documentsDir.createFile("LGT_" + d.getTime() + ".txt");
-		file_HRT = documentsDir.createFile("HRT_" + d.getTime() + ".txt");
-		file_GPS = documentsDir.createFile("GPS_" + d.getTime() + ".txt");
-		file_LBL = documentsDir.createFile("avg_LBL_" + d.getTime() + ".txt");
-		file_WIF = documentsDir.createFile("avg_WIF1_" + d.getTime() + ".txt");
-		file_PRE = documentsDir.createFile("PRE_" + d.getTime() + ".txt");
+		file_LGT = documentsDir.createFile(mToday + "/LGT_" + d.getTime() + ".txt");
+		file_HRT = documentsDir.createFile(mToday + "/HRT_" + d.getTime() + ".txt");
+		file_GPS = documentsDir.createFile(mToday + "/GPS_" + d.getTime() + ".txt");
+		file_LBL = documentsDir.createFile(mToday + "/avg_LBL_" + d.getTime() + ".txt");
+		file_WIF = documentsDir.createFile(mToday + "/avg_WIF1_" + d.getTime() + ".txt");
+		file_PRE = documentsDir.createFile(mToday + "/PRE_" + d.getTime() + ".txt");
 
 		if (file_PED != null) {
 			file_PED.openStream("w", function(fs) {
@@ -209,7 +215,7 @@ function onsuccess(files) {
 		}
 
 		/* Files for average values */
-		createAvgFiles(documentsDir, d);
+		//createAvgFiles(documentsDir, d);
 		/* end of avg files */
 
 		file_ERR = documentsDir.createFile("ERR_" + d.getTime() + ".txt");
@@ -336,23 +342,24 @@ function onSuccessCellular(cellular) {
 function createAvgFiles(documentsDir, d){
 	tizen.filesystem.resolve('documents', function(dir) {
 		documentsDir = dir;
-		avg_file_PED = documentsDir.createFile("avg_PED_" + d.getTime()
+
+		avg_file_PED = documentsDir.createFile(mToday + "/avg_PED_" + d.getTime()
 				+ ".txt");
-		avg_file_ACC = documentsDir.createFile("avg_ACC_" + d.getTime()
+		avg_file_ACC = documentsDir.createFile(mToday + "/avg_ACC_" + d.getTime()
 				+ ".txt");
-		avg_file_UVL = documentsDir.createFile("avg_UVL_" + d.getTime()
+		avg_file_UVL = documentsDir.createFile(mToday + "/avg_UVL_" + d.getTime()
 				+ ".txt");
-		avg_file_LGT = documentsDir.createFile("avg_LGT_" + d.getTime()
+		avg_file_LGT = documentsDir.createFile(mToday + "/avg_LGT_" + d.getTime()
 				+ ".txt");
-		avg_file_MGN = documentsDir.createFile("avg_MGN_" + d.getTime()
+		avg_file_MGN = documentsDir.createFile(mToday + "/avg_MGN_" + d.getTime()
 				+ ".txt");
-		avg_file_HRT = documentsDir.createFile("avg_HRT_" + d.getTime()
+		avg_file_HRT = documentsDir.createFile(mToday + "/avg_HRT_" + d.getTime()
 				+ ".txt");
-		avg_file_GPS = documentsDir.createFile("avg_GPS_" + d.getTime()
+		avg_file_GPS = documentsDir.createFile(mToday + "/avg_GPS_" + d.getTime()
 				+ ".txt");
-		avg_file_NTW = documentsDir.createFile("avg_NTW_" + d.getTime()
+		avg_file_NTW = documentsDir.createFile(mToday + "/avg_NTW_" + d.getTime()
 				+ ".txt");
-		avg_file_PRE = documentsDir.createFile("avg_PRE_" + d.getTime()
+		avg_file_PRE = documentsDir.createFile(mToday + "/avg_PRE_" + d.getTime()
 				+ ".txt");		
 
 		if (avg_file_PED !== null) {
@@ -592,7 +599,7 @@ function resetAlarms(){
 }
 
 
-var RUN_PERIOD = 10;
+var RUN_PERIOD = 6*10;
 var run_time;
 function onErrorWifi(error){
 	stream_ERR.write(new Date + "\t WIFI error: " + e);
@@ -823,7 +830,7 @@ window.onload = function() {
 //		stream_ERR.write(new Date() + "\t network error: " + e +"\n" );
 //	}		
 
-}
+};
 
 function onGetSuccessPRE(sensorData) {
 	count_pre++;
@@ -1142,7 +1149,9 @@ function onChangedACC(e) {
 		peaks_per_window = 0;
 	}
 	 */
-
+	
+	/*Comment out to send files*/
+	/*
 	if ( now_time.getTime() - last_sent_time.getTime() >= SEND_PERIOD || count_acc >= sendingCounter ){
 		XHRTimer();
 		acc_xhr_ctr = 0;
@@ -1150,6 +1159,7 @@ function onChangedACC(e) {
 		last_sent_time = now_time;
 		stream_ERR.write(new Date() + " starting sending procedure\n");
 	}
+	*/
 }
 
 var playSound = 0;
