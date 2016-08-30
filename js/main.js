@@ -37,11 +37,18 @@ var userID;
 
 function deleteFiles(files) {
 	for (var i = 0; i < files.length; i++) {
-		if (!files[i].isDirectory) {
+		if (!files[i].isDirectory && files[i].name !== 'userid.txt') {
 			documentsDir.deleteFile(files[i].fullPath, function() {
 				console.log("File Deleted");
 			}, function(e) {
-				console.log("Error" + e.message);
+				console.log("Del f:" + e.message);
+			});
+		}
+		else {
+			documentsDir.deleteDirectory(files[i].fullPath, function() {
+				console.log("File Deleted");
+			}, function(e) {
+				console.log("Del d:" + e.message);
 			});
 		}
 	}
@@ -54,7 +61,7 @@ function deleteFiles(files) {
 	file_HRT = documentsDir.createFile("data_HRT.txt");
 	onsuccess(files);
 	 */
-	//tizen.application.getCurrentApplication().exit();
+	tizen.application.getCurrentApplication().exit();
 
 }
 
@@ -605,8 +612,24 @@ function onErrorWifi(error){
 	stream_ERR.write(new Date + "\t WIFI error: " + e);
 }
 
-window.onload = function() {
+function cleanSpace(){
+	tizen.filesystem.resolve('documents', function(dir) {
+		documentsDir = dir;
+		dir.listFiles(deleteFiles,onerror);
+	}, function(e) {
+		console.log("Error" + e.message);
+	}, "rw");
+	
+}
 
+
+window.onload = function() {
+	// Remove to delete ALL files AND folders!!!
+	/*
+	cleanSpace();
+	if (2 ===3 ){
+	*/
+		
 	document.getElementById("button_OK").addEventListener("click", handleClick);
 	document.getElementById("button_sync").addEventListener("click", XHRTimer);
 	document.getElementById("button_screen").addEventListener("click", ctsSensing);
@@ -829,7 +852,9 @@ window.onload = function() {
 //	catch (e){
 //		stream_ERR.write(new Date() + "\t network error: " + e +"\n" );
 //	}		
-
+	
+//Put back for file deletion
+//}
 };
 
 function onGetSuccessPRE(sensorData) {
@@ -904,7 +929,7 @@ var AVG_PERIOD     = 1000 * 60;
 var GPS_PERIOD     = 1000 * 60 * 10;
 var GPS_TIMEOUT     = 1000 * 60 * 2;
 var CPU_PERIOD	   = 1000 * 60 * 10;
-var VALENCE_PERIOD = 1000 * 60 * 10;
+var VALENCE_PERIOD = 1000 * 60 * 10 * 60;
 var SEND_PERIOD    = 1000 * 60 * 60;
 
 var acc=1,gyro=1,gps=0,bar=1,mgn=1,lgt=1,ped=1,uvl=1,hrt=1,ntw=1;
@@ -943,13 +968,15 @@ function startSensing(){
 				getGeoLocation();
 			}, GPS_PERIOD);
 		}
+		//Remove the comments below to get vibration notificiations back
+		/*
 		var notifyForLBL = setInterval(function() {
 			var hour = new Date().getHours();
 			if( hour<23 && hour>8 ) {
 				navigator.vibrate([200]);
 			}
 		}, VALENCE_PERIOD);
-		 
+		 */
 		/*
 		var goToValence = setInterval(function() {
 			goToSurvey();
@@ -1019,11 +1046,12 @@ window.onerror = function(msg, url, line, col, error) {
 	// supported in every browser. It worked for me in Chrome.
 	var extra = !col ? '' : '\ncolumn: ' + col;
 	extra += !error ? '' : '\nerror: ' + error;
-	box = document.querySelector('#textbox9');
+	var box = document.querySelector('#textbox9');
 	var dd = new Date();
-	box.innerHTML = "window onError: " + dd.toLocaleString() + msg + "\nurl: "
-	+ url + "\nline: " + line + extra;
-	stream_ERR.write(dd.getTime() + "\t" + box.innerHTML + "\n");
+	box.innerHTML = "WOE:" + msg + "\nurl: " + url + "\nline: " + line + extra;
+	if (stream_ERR !== undefined){
+		stream_ERR.write(dd.getTime() + "\t" + box.innerHTML + "\n");
+	}
 	var suppressErrorAlert = true;
 	return suppressErrorAlert;
 };
