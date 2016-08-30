@@ -41,14 +41,14 @@ function deleteFiles(files) {
 			documentsDir.deleteFile(files[i].fullPath, function() {
 				console.log("File Deleted");
 			}, function(e) {
-				console.log("Del f:" + e.message);
+				console.log("Del F:" + e.message);
 			});
 		}
 		else {
-			documentsDir.deleteDirectory(files[i].fullPath, function() {
+			documentsDir.deleteDirectory(files[i].fullPath, true, function() {
 				console.log("File Deleted");
 			}, function(e) {
-				console.log("Del d:" + e.message);
+				console.log("Del D:" + e.message);
 			});
 		}
 	}
