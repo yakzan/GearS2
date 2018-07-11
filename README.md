@@ -1,4 +1,1 @@
-Accelerometer Sample
-================
-
-A sample application demonstrating the use of the Gear's accelerometer.
+Code to sample all sensors on Samsung Galaxy Gear S, S2 and S3.
